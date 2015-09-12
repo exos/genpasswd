@@ -1,5 +1,5 @@
 {
-  "name": "genpass",
+  "name": "genpasswd",
   "version": "0.1.0",
   "description": "Password generator",
   "main": "index.js",
