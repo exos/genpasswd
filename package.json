@@ -1,0 +1,25 @@
+{
+  "name": "genpass",
+  "version": "0.1.0",
+  "description": "Password generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "bin": {
+    "genpasswd": "bin/genpasswd"
+  },
+  "keywords": [
+    "password",
+    "generator",
+    "deterministic"
+  ],
+  "author": "exos <tioscar@gmail.com>",
+  "license": "WTFPL",
+  "dependencies": {
+    "async": "^1.4.2",
+    "commander": "^2.8.1",
+    "prompt": "^0.2.14",
+    "underscore": "^1.8.3"
+  }
+}

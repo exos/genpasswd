@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var cli = require('../lib/cli');
+
+program
+    .version('0.1.0')
+    .option('--types', "Show available passwords types")
+    .option('-l, --length <n>', "Password length (by default is 15)", parseInt)
+    .option('-t, --type <type>', "Type (see --types)")
+    .option('-o, --output <file>', "Output file")
+    .option('--lower', "Use only lower case")
+    .option('--upper', "Use only upper case")
+    .option('--numeric', "For custom type, use numeric chars")
+    .option('--alpha', "For custom type, use alphabetical chars")
+    .option('--symbols', "For custom type, use symbols")
+    .option('--chars <chars>', "For custom type, use own chars (not separated)")
+    .option('-d, --deterministic', "Generate a deterministic password")
+    .option('-i, --input <file>', "For deterministic, input source")
+    .option('--salt <salt>', "For deterministic, pbkdf2 salt")
+    .option('--iterations <i>', "For deterministic, pbkdf2 iterations", parseInt)
+    .parse(process.argv);
+
+
+var app = new cli.CliProgram(program);
+
+app.run(function (err) {
+    if (err) {
+        console.error(err.message);
+        process.exit(1);
+    }
+});
+
+/* vi:syntax=js */
