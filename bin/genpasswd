@@ -4,7 +4,7 @@ var program = require('commander');
 var cli = require('../lib/cli');
 
 program
-    .version('0.1.0')
+    .version('0.1.1')
     .option('--types', "Show available passwords types")
     .option('-l, --length <n>', "Password length (by default is 15)", parseInt)
     .option('-t, --type <type>', "Type (see --types)")
@@ -19,8 +19,22 @@ program
     .option('-i, --input <file>', "For deterministic, input source")
     .option('--salt <salt>', "For deterministic, pbkdf2 salt")
     .option('--iterations <i>', "For deterministic, pbkdf2 iterations", parseInt)
+    .option('--100k', "Alias of --iterations 100000", parseInt)
+    .option('--1m', "Alias of --iterations 1000000", parseInt)
+    .option('--stdin', "Alias of --input /dev/stdin", parseInt)
     .parse(process.argv);
 
+if (typeof program['1M'] !== "undefined") {
+    program.iterations = 1000000;
+}
+
+if (typeof program['100k'] !== "undefined") {
+    program.iterations = 100000;
+}
+
+if (typeof program['stdin'] !== "undefined") {
+    program.input = '/dev/stdin';
+}
 
 var app = new cli.CliProgram(program);
 
