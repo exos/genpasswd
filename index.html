@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Genpasswd by exos</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Genpasswd</h1>
+        <h2>A CLI utility &amp; Node.js lib to generate strong passwords, with deterministic options</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/exos/genpasswd/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/exos/genpasswd/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/exos/genpasswd" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>Generate strongs passwords, with deterministics options.</p>
+
+<h1>
+<a id="cli-tool-genpasswd" class="anchor" href="#cli-tool-genpasswd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CLI Tool (genpasswd)</h1>
+
+<p>The usage is very simple, by default the command generate a password with 15[0]
+characters length, using letters, numbers and symnbols:</p>
+
+<pre><code>$ genpasswd 
+h8d=1Cs&lt;;V}[Az/
+</code></pre>
+
+<p>You can see all options using:</p>
+
+<pre><code>$ genpasswd --help
+</code></pre>
+
+<h2>
+<a id="passwords-types" class="anchor" href="#passwords-types" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passwords types</h2>
+
+<p>Passwords types is a easy way to generate a specific format password, There are:</p>
+
+<ul>
+<li>
+<strong>alpha</strong>: Alphabetics chars (only letters, from a to z)</li>
+<li>
+<strong>alphanumeric</strong>: Alphabetics chars with numbers</li>
+<li>
+<strong>numeric</strong>: Numbers</li>
+<li>
+<strong>symbols</strong>: Symbols like #, !, etc.</li>
+<li>
+<strong>complex</strong>: Use a mix of Alphanumerics and symbols</li>
+<li>
+<strong>custom</strong>: Yo can set what groups of chars and add chars with --chars</li>
+</ul>
+
+<p>This list can be showed using </p>
+
+<pre><code>$ genpasswd --types
+</code></pre>
+
+<p>By default, genpasswd use <em>complex</em>, you can use custom combined with selected
+types, for example:</p>
+
+<pre><code>$ genpasswd -l 30 -t custom --numeric --symbols 
+:`:73(;%}6{=!;452?//~@$??7+1^=
+</code></pre>
+
+<p>This return a password generated with numbers and symbols, you can set specific chars to, and combine:</p>
+
+<pre><code>$ genpasswd -l 30 -t custom --chars abcDEF123
+1c2bcF2baaab2EF2F31aDFD32Ec31a
+$genpasswd -l 30 -t custom --chars abcDEF --numeric
+ac29b9863210F57Dc87Fc922ba92aa
+</code></pre>
+
+<h2>
+<a id="deterministic-passwords" class="anchor" href="#deterministic-passwords" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deterministic passwords</h2>
+
+<p>You can generate deterministic passwords based in thre variables; a 
+<em>phrasepass</em>, a <em>salt</em> and an <em>iterations number</em>, the interations are 
+set on 1000 by default, but the phrasepass and salt are requried.</p>
+
+<p>This funcions allow you to generate strong passwords for services based 
+on two (or three) memorizables seeds.</p>
+
+<p>For example, if you can set a strong password to you email account, you can 
+use the addres as phrasepass and a simple password as the salt, for example:</p>
+
+<pre><code>$ genpasswd -d -l 30
+genpass: phrasepass:  &lt;- here you write you address (yourself@host.com)
+genpass: salt:  &lt;- here your every day password (coldplay2012$) 
+fQz":Jib&amp;7H,d}W6j+sA{)jnS~}u]3"
+</code></pre>
+
+<p>Ever you use a deterministic algorithm to generate a password (with this 
+utility) the password will be identical. You can generate it whenever you need
+it. The internal algorithm used to generate the password is 
+<a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>.</p>
+
+<p>The advantage of using as phrasepass the account name, is that you can have a
+different password for each service.</p>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h1>
+
+<h2>
+<a id="with-npm-" class="anchor" href="#with-npm-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>With npm :</h2>
+
+<pre><code>$ sudo npm install genpasswd
+</code></pre>
+
+<h2>
+<a id="from-sources" class="anchor" href="#from-sources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>From sources</h2>
+
+<pre><code>$ git clone https://github.com/exos/genpasswd.git
+$ npm install -d 
+</code></pre>
+
+<h1>
+<a id="nodejs-package" class="anchor" href="#nodejs-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node.js package</h1>
+
+<pre><code>$ npm install --save genpasswd
+</code></pre>
+
+<p>In your code:</p>
+
+<div class="highlight highlight-source-js"><pre>
+<span class="pl-k">var</span> genPasswd <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>genpasswd<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">var</span> options <span class="pl-k">=</span> {
+    type<span class="pl-k">:</span> <span class="pl-smi">genPasswd</span>.<span class="pl-smi">password</span>.<span class="pl-c1">TYPE_COMPLEX</span>,
+    passwordLength<span class="pl-k">:</span> <span class="pl-c1">30</span>
+};
+
+<span class="pl-smi">genPasswd</span>.<span class="pl-smi">password</span>.<span class="pl-en">generate</span>(options, <span class="pl-k">function</span> (<span class="pl-smi">err</span>, <span class="pl-smi">password</span>) {
+    <span class="pl-c">// password is a string</span>
+});
+</pre></div>
+
+<p>You can see more details on <a href="https://github.com/exos/genpasswd/wiki">the wiki</a></p>
+
+<h1>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support</h1>
+
+<p>You can:</p>
+
+<ul>
+<li>Report bugs or ideas in <a href="https://github.com/exos/genpasswd/issues">the tracker</a>
+</li>
+<li>Fork and send pull request with bug fixeds/new features</li>
+<li>Spellcheck (My english is horrible)</li>
+<li>Donate BTC:  1E9A4Jg1tckJGD8rUx1WogBEL7uPXAktNP</li>
+</ul>
+
+<p>0- The 15 length password by default is because 15 chars is a better option
+(no best), based on stadistics <a href="http://log.exodica.com.ar/D">makes for me</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
