@@ -28,7 +28,7 @@ program
     .option('-a, --alphanumeric', "Alias of --type alphanumeric")
     .parse(process.argv);
 
-if (typeof program['1M'] !== "undefined") {
+if (typeof program['1m'] !== "undefined") {
     program.iterations = 1000000;
 }
 
