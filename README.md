@@ -19,10 +19,11 @@ Passwords types is a easy way to generate a specific format password, There are:
 
 * **alpha**: Alphabetics chars (only letters, from a to z)
 * **alphanumeric**: Alphabetics chars with numbers
-* **numeric**: Numbers
+* **numeric**: Only numbers
 * **symbols**: Symbols like #, !, etc.
 * **complex**: Use a mix of Alphanumerics and symbols
 * **custom**: Yo can set what groups of chars and add chars with --chars
+* **binary**: Binary output (for keys usages)
 
 This list can be showed using 
 
@@ -66,6 +67,30 @@ it. The internal algorithm used to generate the password is
 
 The advantage of using as phrasepass the account name, is that you can have a
 different password for each service.
+
+## Symetric key generation
+
+For symetric binary key generation, there are a _binary_ type, it works like a 
+simple random generator like ```dd if=/dev/random```, but with the posibility of 
+generate a deterministic binary keys.
+
+For example, if you need to generate a
+[LUKS](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup) key, you need a 
+4096B binary blob. With DD it's: 
+    
+    $ dd if=/dev/random of=disk.key bs=1024 count=4
+
+With genpasswd can be:
+
+    $ genpasswd -bl 4096 -o disk.key 
+
+Normally you need to backup this type of keys, but with the deterministic
+method, you can generate it with a password/salt schema and only remember it
+like a standar password.
+
+    $ genpasswd -dbl 4096 --100k -o disk.key
+
+This generate a deterministic key with a 100,000 iterations. 
 
 # Install
 
