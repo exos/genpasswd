@@ -2,9 +2,10 @@
 
 var program = require('commander');
 var cli = require('../lib/cli');
+var package = require('../package.json');
 
 program
-    .version('0.1.1')
+    .version(package.version)
     .option('--types', "Show available passwords types")
     .option('-l, --length <n>', "Password length (by default is 15)", parseInt)
     .option('-t, --type <type>', "Type (see --types)")
@@ -22,6 +23,9 @@ program
     .option('--100k', "Alias of --iterations 100000", parseInt)
     .option('--1m', "Alias of --iterations 1000000", parseInt)
     .option('--stdin', "Alias of --input /dev/stdin", parseInt)
+    .option('-n, --nonewline', "Do not output the trailing newline")
+    .option('-b, --binary', "Alias of --type binary")
+    .option('-a, --alphanumeric', "Alias of --type alphanumeric")
     .parse(process.argv);
 
 if (typeof program['1M'] !== "undefined") {
@@ -36,6 +40,14 @@ if (typeof program['stdin'] !== "undefined") {
     program.input = '/dev/stdin';
 }
 
+if (typeof program['binary'] !== "undefined") {
+    program.type = "binary";
+}
+
+if (typeof program['alphanumeric'] !== "undefined") {
+    program.type = "alphanumeric"; 
+}
+
 var app = new cli.CliProgram(program);
 
 app.run(function (err) {
@@ -45,4 +57,4 @@ app.run(function (err) {
     }
 });
 
-/* vi:syntax=js */
+/* vi: syntax=js ed: */
