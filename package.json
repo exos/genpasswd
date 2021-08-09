@@ -18,10 +18,10 @@
   "author": "exos <tioscar@gmail.com>",
   "license": "WTFPL",
   "dependencies": {
-    "async": "^1.4.2",
-    "commander": "^2.8.1",
-    "prompt": "^0.2.14",
-    "underscore": "^1.8.3"
+    "async": "^3.2.1",
+    "commander": "^8.1.0",
+    "prompt": "^1.1.0",
+    "underscore": "^1.13.1"
   },
   "devDependencies": {
     "npm-check-updates": "^11.8.3"
