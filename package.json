@@ -26,5 +26,8 @@
   },
   "devDependencies": {
     "npm-check-updates": "^11.8.3"
+  },
+  "engines": {
+    "node": ">=12 <16"
   }
 }
