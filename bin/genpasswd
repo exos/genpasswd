@@ -1,60 +1,13 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var cli = require('../lib/cli');
-var package = require('../package.json');
+const program = require('../lib/cli/program');
 
-program
-    .version(package.version)
-    .option('--types', "Show available passwords types")
-    .option('-l, --length <n>', "Password length (by default is 15)", parseInt)
-    .option('-t, --type <type>', "Type (see --types)")
-    .option('-o, --output <file>', "Output file")
-    .option('--lower', "Use only lower case")
-    .option('--upper', "Use only upper case")
-    .option('--numeric', "For custom type, use numeric chars")
-    .option('--alpha', "For custom type, use alphabetical chars")
-    .option('--symbols', "For custom type, use symbols")
-    .option('--chars <chars>', "For custom type, use own chars (not separated)")
-    .option('-d, --deterministic', "Generate a deterministic password")
-    .option('-i, --input <file>', "For deterministic, input source")
-    .option('--salt <salt>', "For deterministic, pbkdf2 salt")
-    .option('--iterations <i>', "For deterministic, pbkdf2 iterations", parseInt)
-    .option('--100k', "Alias of --iterations 100000", parseInt)
-    .option('--1m', "Alias of --iterations 1000000", parseInt)
-    .option('--stdin', "Alias of --input /dev/stdin", parseInt)
-    .option('-n, --nonewline', "Do not output the trailing newline")
-    .option('-b, --binary', "Alias of --type binary")
-    .option('-a, --alphanumeric', "Alias of --type alphanumeric")
-    .parse(process.argv);
+(() => program.parseAsync(process.argv))()
+    .then(() => process.exit(0))
+    .catch((e) => {
+        console.error('Unknow error ', e.message);
+        console.log(e.stack);
+    })
+;
 
-if (typeof program['1m'] !== "undefined") {
-    program.iterations = 1000000;
-}
-
-if (typeof program['100k'] !== "undefined") {
-    program.iterations = 100000;
-}
-
-if (typeof program['stdin'] !== "undefined") {
-    program.input = '/dev/stdin';
-}
-
-if (typeof program['binary'] !== "undefined") {
-    program.type = "binary";
-}
-
-if (typeof program['alphanumeric'] !== "undefined") {
-    program.type = "alphanumeric"; 
-}
-
-var app = new cli.CliProgram(program);
-
-app.run(function (err) {
-    if (err) {
-        console.error(err.message);
-        process.exit(1);
-    }
-});
-
-/* vi: syntax=js ed: */
+/* vi: syntax=JavaScript ed: */
