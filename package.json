@@ -25,7 +25,7 @@
     "underscore": "^1.13.1"
   },
   "devDependencies": {
-    "npm-check-updates": "^11.8.3"
+    "npm-check-updates": "^16.3.14"
   },
   "engines": {
     "node": ">=12 <16"
